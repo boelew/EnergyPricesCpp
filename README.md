@@ -20,25 +20,41 @@ energy-price-app
 
 ## Setup Instructions
 
-1. Clone the repository:
+1. Install prerequisites
+   ```sh
+   brew install cmake
+   brew install conan
    ```
+
+2. Clone the repository:
+   ```sh
    git clone <repository-url>
    cd energy-price-app
    ```
 
-2. Create a build directory and navigate into it:
-   ```
+3. Create a build directory:
+   ```sh
    mkdir build
+   ```
+
+4. Conan installation
+   ```sh
+   conan install . --output-folder=build --build=missing
+   ```
+
+5. Navigate to the build directory
+   ```sh
    cd build
    ```
 
-3. Run CMake to configure the project:
-   ```
-   cmake ..
+6. Run CMake to configure the project:
+   ```sh
+   cmake .. -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release
+   cmake --build .
    ```
 
-4. Build the application:
-   ```
+7. Build the application:
+   ```sh
    make
    ```
 
@@ -55,13 +71,3 @@ The application will fetch and display the current energy prices from the Europe
 
 This application interacts with the European Data API to retrieve energy pricing information. Ensure you have access to the API and any necessary credentials or tokens required for authentication.
 
-// install cmake
-// install conan
-
-// from energy-price-app directory
-// conan install . --output-folder=build --build=missing
-
-
-// from build directory
-cmake .. -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release
-cmake --build .
