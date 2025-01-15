@@ -31,6 +31,19 @@ file(GLOB SOURCES
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
+# Add Google Test
+enable_testing()
+add_subdirectory(external/googletest)
+include_directories(external/googletest/googletest/include)
+
+# Add test executable
+add_executable(EnergyPriceAppTests
+    tests/test_energy_price.cpp
+)
+
 target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS} curl nlohmann_json::nlohmann_json)
 #target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)
 #target_link_libraries(${PROJECT_NAME} nlohmann_json::nlohmann_json)
+
+target_link_libraries(EnergyPriceAppTests gtest gtest_main nlohmann_json::nlohmann_json)
+add_test(NAME EnergyPriceAppTests COMMAND EnergyPriceAppTests)
